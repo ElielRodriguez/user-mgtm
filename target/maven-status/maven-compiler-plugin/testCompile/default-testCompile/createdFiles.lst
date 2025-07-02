@@ -1,0 +1,4 @@
+org/acme/UserResourceTest.class
+org/acme/UserResourceIT.class
+org/acme/helpers/UserHelperImplTest.class
+org/acme/services/UserServiceImplTest.class

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.acme.helpers.UserHelperImplTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.908 s -- in org.acme.helpers.UserHelperImplTest

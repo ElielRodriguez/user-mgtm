@@ -1,0 +1,278 @@
+---
+openapi: 3.1.0
+components:
+  schemas:
+    CountriesGetResponse:
+      type: object
+      properties:
+        country:
+          type: string
+        demonym:
+          type: string
+    ResultStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        page:
+          type: integer
+          format: int32
+        pages:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+    ResultUserRequestResponse:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/ResultStatus"
+        data:
+          $ref: "#/components/schemas/UserRequestResponse"
+        errors:
+          type: array
+          items:
+            type: string
+    UserPostRequest:
+      type: object
+      required:
+      - firstName
+      - firstLastName
+      - email
+      - address
+      - phoneNumber
+      - country
+      properties:
+        firstName:
+          type: string
+          pattern: \S
+        secondName:
+          type: string
+        firstLastName:
+          type: string
+          pattern: \S
+        secondLastName:
+          type: string
+        email:
+          type: string
+          pattern: \S
+        address:
+          type: string
+          pattern: \S
+        phoneNumber:
+          type: string
+          minLength: 10
+          maxLength: 10
+          pattern: \S
+        country:
+          type: string
+          minLength: 2
+          maxLength: 2
+          pattern: \S
+    UserRequestResponse:
+      type: object
+      required:
+      - firstName
+      - firstLastName
+      - email
+      - address
+      - phoneNumber
+      - country
+      - demonym
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+          pattern: \S
+        secondName:
+          type: string
+        firstLastName:
+          type: string
+          pattern: \S
+        secondLastName:
+          type: string
+        email:
+          type: string
+          pattern: \S
+        address:
+          type: string
+          pattern: \S
+        phoneNumber:
+          type: string
+          minLength: 10
+          maxLength: 10
+          pattern: \S
+        country:
+          type: string
+          pattern: \S
+        demonym:
+          type: string
+          pattern: \S
+    UserUpdateRequest:
+      type: object
+      required:
+      - address
+      - country
+      properties:
+        email:
+          type: string
+        address:
+          type: string
+          pattern: \S
+        phoneNumber:
+          type: string
+          minLength: 10
+          maxLength: 10
+        country:
+          type: string
+          pattern: \S
+paths:
+  /users:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPostRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultUserRequestResponse"
+        "400":
+          description: Bad Request
+      summary: Save
+      tags:
+      - User Resource
+  /users/all:
+    get:
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+      summary: Find All
+      tags:
+      - User Resource
+  /users/country/{country}:
+    get:
+      parameters:
+      - name: country
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+      summary: Find By Country
+      tags:
+      - User Resource
+  /users/{id}:
+    put:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultUserRequestResponse"
+        "400":
+          description: Bad Request
+      summary: Update
+      tags:
+      - User Resource
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultUserRequestResponse"
+      summary: Update
+      tags:
+      - User Resource
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+      summary: Find By Id
+      tags:
+      - User Resource
+  /v3.1/alpha/{country}:
+    get:
+      parameters:
+      - name: country
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountriesGetResponse"
+      summary: Get Demonyn By Country Name
+      tags:
+      - Demonym Service Impl
+info:
+  title: code-with-quarkus API
+  version: 1.0.0-SNAPSHOT
