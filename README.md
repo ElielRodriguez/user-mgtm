@@ -53,11 +53,43 @@ You can then execute your native executable with: `./target/code-with-quarkus-1.
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
 
+## Documentation
+
+### Description
+Este proyecto es una API REST construida con Java y quarkus, gestionada con Maven.  
+Se propone desarrollar un servicio RESTful que permita realizar
+operaciones CRUD sobre la lista de clientes. Este servicio proporcionará una interfaz uniforme y fácil de usar para gestionar todos los aspectos relacionados con los clientes, mejorando así la eficiencia y la calidad de la gestión de la información del cliente.
+
+### Requirements
+- JDK 17
+- Maven 3.9+
+- Base de datos (PostgreSQL)
+- Docker
+
+### Enviorment configuration
+- Clone the repository:
+```shell
+  git clone https://github.com/ElielRodriguez/user-mgtm
+```
+- Modify the application properties at docker-compose.yml to set the database connection details:
+```yaml
+  environment:
+    - QUARKUS_DATASOURCE_URL=jdbc:postgresql://db:5432/user_mgmt
+    - QUARKUS_DATASOURCE_USERNAME=postgres
+    - QUARKUS_DATASOURCE_PASSWORD=postgres
+```
+
+### Usages
+- Start the application using Docker Compose:
+```shell
+  docker-compose up -d
+```
+
 ## Provided Code
 
 ### REST
 
-Easily start your REST Web Services
+The app is exposed by default at `http://localhost:8080`.
 
 # User Resource API
 
@@ -135,7 +167,7 @@ Get users by country (paginated).
 **Description:**  
 Create a new user.
 
-**Request Body:**  
+**Request Body:**
 ```json
 UserPostRequest
 ````
